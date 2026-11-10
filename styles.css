@@ -7,3 +7,5 @@
 /* Compact directions shortcut in the masthead. */
 header .brand{letter-spacing:-.3px;font-size:22px;text-transform:none}header .directions-link{display:flex;align-items:center;justify-content:center;width:46px;height:46px;border:1px solid var(--line);border-radius:50%;flex-shrink:0;transition:background .2s,color .2s}header .directions-link:hover{background:var(--ink);color:var(--paper)}
 @media(max-width:650px){header{flex-direction:row;align-items:center;gap:12px}header .brand{font-size:20px}header nav{flex-shrink:0}header .directions-link{width:42px;height:42px}html{scroll-padding-top:100px}}
+
+header nav{margin-left:auto;flex-shrink:0}
