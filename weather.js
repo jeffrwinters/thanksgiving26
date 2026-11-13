@@ -10,7 +10,7 @@
         summary.textContent = 'Thanksgiving 2026 has passed. Thanks for the memories!';
         return;
       }
-      const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=38.15&longitude=-92.62&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&temperature_unit=fahrenheit&timezone=America%2FChicago&forecast_days=16', {signal:AbortSignal.timeout(10000)});
+      const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=38.15&longitude=-92.62&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FChicago&forecast_days=16', {signal:AbortSignal.timeout(10000)});
       if (!response.ok) throw new Error('Forecast unavailable');
       const {daily} = await response.json();
       const dates = [['2026-11-25', 'Wednesday · Nov 25'], [target, 'Thanksgiving · Nov 26'], ['2026-11-27', 'Friday · Nov 27']];
@@ -24,6 +24,7 @@
       for (const [date, label] of dates) {
         const i = daily?.time?.indexOf(date) ?? -1;
         const day = document.createElement('div');
+        day.className = date === target ? 'weather-day weather-day-main' : 'weather-day';
         const title = document.createElement('strong');
         title.textContent = label;
         const details = document.createElement('span');
@@ -36,6 +37,18 @@
           details.textContent = `${conditions[daily.weather_code?.[i]] || 'Forecast'} · High ${Math.round(high)}°F / Low ${Math.round(low)}°F${Number.isFinite(rain) ? ` · ${Math.round(rain)}% chance of precipitation` : ''}`;
         }
         day.append(title, details);
+        if (date === target && i >= 0) {
+          const speed = daily.wind_speed_10m_max?.[i];
+          const gust = daily.wind_gusts_10m_max?.[i];
+          const degrees = daily.wind_direction_10m_dominant?.[i];
+          if (Number.isFinite(speed)) {
+            const wind = document.createElement('span');
+            wind.className = 'weather-wind';
+            const direction = Number.isFinite(degrees) ? ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'][((Math.round(degrees / 22.5) % 16) + 16) % 16] : '';
+            wind.textContent = `Wind${direction ? ` ${direction}` : ''} · up to ${Math.round(speed)} mph${Number.isFinite(gust) ? ` · gusts ${Math.round(gust)} mph` : ''}`;
+            day.append(wind);
+          }
+        }
         grid.append(day);
       }
       summary.replaceChildren(grid);
