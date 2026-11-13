@@ -9,3 +9,14 @@ header .brand{letter-spacing:-.3px;font-size:22px;text-transform:none}header .di
 @media(max-width:650px){header{flex-direction:row;align-items:center;gap:12px}header .brand{font-size:20px}header nav{flex-shrink:0}header .directions-link{width:42px;height:42px}html{scroll-padding-top:100px}}
 
 header nav{margin-left:auto;flex-shrink:0}
+
+/* Road-trip artwork links to the house address and directions. */
+.route-map{display:block;min-width:0;border-radius:28px;transition:transform .2s}.route-map img{display:block;width:100%;height:auto;border-radius:28px}.route-map:hover{transform:translateY(-4px)}
+.hero h1{font-size:clamp(45px,4.6vw,66px);line-height:1.06}
+@media(max-width:650px){.hero h1{font-size:clamp(38px,9vw,58px)}}
+
+/* One date label moves between the hero and the persistent masthead. */
+.header-identity{display:flex;flex-direction:column;gap:6px;min-width:0}.header-date-slot{height:14px}.hero-date-slot{height:14px;margin-bottom:22px}.event-date{margin:0;line-height:14px;font-size:10px;letter-spacing:1.2px;white-space:nowrap}.header-date-slot .event-date{font-size:10px}
+@media(max-width:650px){header .brand{font-size:18px}.event-date{font-size:9px;letter-spacing:.7px}.header-date-slot .event-date{font-size:9px;letter-spacing:.7px}html{scroll-padding-top:120px}}
+
+.activity-image{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:14px;margin-bottom:24px}
