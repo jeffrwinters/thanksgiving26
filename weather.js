@@ -18,7 +18,7 @@
       const headerWeather = document.querySelector('#header-weather');
       const thanksgivingHigh = daily?.temperature_2m_max?.[index];
       if (headerWeather && Number.isFinite(thanksgivingHigh)) {
-        headerWeather.textContent = `Thanksgiving · ${Math.round(thanksgivingHigh)}°F high`;
+        headerWeather.textContent = `Forecast · ${Math.round(thanksgivingHigh)}°F high`;
         headerWeather.hidden = false;
       }
       if (index < 0) {
