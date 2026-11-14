@@ -15,6 +15,12 @@
       const {daily} = await response.json();
       const dates = [['2026-11-25', 'Wednesday · Nov 25'], [target, 'Thanksgiving · Nov 26'], ['2026-11-27', 'Friday · Nov 27']];
       const index = daily?.time?.indexOf(target) ?? -1;
+      const headerWeather = document.querySelector('#header-weather');
+      const thanksgivingHigh = daily?.temperature_2m_max?.[index];
+      if (headerWeather && Number.isFinite(thanksgivingHigh)) {
+        headerWeather.textContent = `Thanksgiving · ${Math.round(thanksgivingHigh)}°F high`;
+        headerWeather.hidden = false;
+      }
       if (index < 0) {
         summary.textContent = 'The November 26 forecast isn’t available yet. Check back closer to Thanksgiving.';
         return;
